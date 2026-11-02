@@ -1,0 +1,70 @@
+{
+  "version": "0.1.0",
+  "package_type": "plugin",
+  "id": "obsidian-cli",
+  "name": "Obsidian CLI",
+  "description": "Lets the agent work with Obsidian through its official CLI.",
+  "display_name": {
+    "en": "Obsidian CLI",
+    "zh": "Obsidian 命令行"
+  },
+  "display_description": {
+    "en": "Interact with your Obsidian vault using WorkSwarm and the official CLI tools: search notes, follow links, query Bases, and check Sync status and file history. Windows only.",
+    "zh": "用官方命令行操作笔记库：搜索、查链接、查询 Bases、查看同步状态与历史。仅支持 Windows。"
+  },
+  "category": "Engineering",
+  "source": "local",
+  "avatar": "avatars/avatar.png",
+  "default_init_input": {
+    "en": "Have my local changes been synced yet? And how much storage do I have left?",
+    "zh": "我本地的更改同步了吗？我还剩多少存储空间？"
+  },
+  "tags": [
+    {
+      "en": "Obsidian",
+      "zh": "Obsidian"
+    },
+    {
+      "en": "Productivity",
+      "zh": "效率"
+    },
+    {
+      "en": "Document Management",
+      "zh": "文档管理"
+    }
+  ],
+  "quick_inputs": [
+    {
+      "en": "Have my local changes been synced yet? And how much storage do I have left?",
+      "zh": "我本地的更改同步了吗？我还剩多少存储空间？"
+    },
+    {
+      "en": "List all of my incomplete tasks in my vault.",
+      "zh": "列出我的笔记库中所有未完成的任务。"
+    },
+    {
+      "en": "Can you find this document for me? I believe it is linked in my daily notes.",
+      "zh": "你能帮我找到这份文档吗？我记得它链接在我的每日笔记里。"
+    }
+  ],
+  "skills": [
+    {
+      "dir": "./skills/obsidian-cli",
+      "mode": "all"
+    }
+  ],
+  "tools": [
+    {
+      "file": "tools/obsidian_cli_tool.py",
+      "class": "ObsidianCliTool",
+      "display_name": {
+        "en": "Obsidian CLI Tool",
+        "zh": "Obsidian 命令行工具"
+      },
+      "display_description": {
+        "en": "Runs Obsidian CLI commands and reports failures, timeouts and open dialogs clearly.",
+        "zh": "运行 Obsidian 命令行指令，并明确报告失败、超时和打开的对话框。"
+      }
+    }
+  ]
+}
