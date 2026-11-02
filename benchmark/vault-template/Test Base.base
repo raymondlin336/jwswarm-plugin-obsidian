@@ -1,0 +1,13 @@
+filters:
+  and:
+    - file.inFolder("Books")
+formulas:
+  total: "price * quantity"
+views:
+  - type: table
+    name: All
+    order:
+      - file.name
+      - price
+      - quantity
+      - formula.total
