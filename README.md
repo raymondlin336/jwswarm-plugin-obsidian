@@ -1,0 +1,1 @@
+# jwswarm-plugin-obsidian
