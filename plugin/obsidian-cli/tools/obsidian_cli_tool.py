@@ -25,6 +25,8 @@ _MAX_OUTPUT_CHARS = 100_000
 _LINK_UPDATING_COMMANDS = {"rename", "move"}
 # A vault that isn't loaded yet briefly rejects every command with this error.
 _COMMAND_NOT_LOADED_RE = re.compile(r'^Error: Command ".+" not found')
+# The CLI turns these into a line break or tab, and has no way to escape them.
+_CLI_ESCAPE_RE = re.compile(r"\\[nt]")
 
 
 class _ToolFailure(Exception):
@@ -181,6 +183,16 @@ def _run_command(inputs: dict[str, Any]) -> dict[str, Any]:
     if "vault" in options:
         raise _ToolFailure(
             "invalid_input", "Pass the vault with the vault input, not in options."
+        )
+    garbled = sorted(
+        key for key, value in options.items() if _CLI_ESCAPE_RE.search(str(value))
+    )
+    if garbled:
+        raise _ToolFailure(
+            "unsupported_content",
+            f"Nothing was changed. The value of {', '.join(garbled)} contains a backslash before "
+            "n or t, which the Obsidian CLI would save as a line break or tab. Write this text "
+            "with your own file tools instead, or tell the user it can't be saved through the CLI.",
         )
 
     cli = _find_cli(inputs.get("cli_path"))

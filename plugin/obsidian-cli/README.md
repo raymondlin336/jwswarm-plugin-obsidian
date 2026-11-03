@@ -1,6 +1,6 @@
 # Obsidian CLI (obsidian-cli)
 
-**Version 0.1.0**
+**Version 0.1.1**
 
 Lets WorkSwarm work with your Obsidian vault through Obsidian's official CLI, including features that aren't possible by editing files alone, such as Sync status, file history, Bases, plugins and themes.
 
@@ -30,11 +30,12 @@ The tool's `command`, `options`, `flags` and `vault` inputs map directly to the 
 - **Link setting check:** Before a rename or move, the tool checks that links will update automatically. If they won't, it stops before changing anything.
 - **Time limit:** A command stops after 30 seconds, and the tool reports any dialog open in Obsidian.
 - **Vault selection:** The tool runs the CLI from outside any vault, so the agent's working folder can't select the wrong vault.
+- **Backslash check:** The CLI saves a backslash followed by `n` or `t` as a line break or tab, with no way to escape it. The tool refuses text containing either, so a note is never saved wrong, and the agent writes that text with its own file tools instead.
 
 ## Permissions and safety
 
 - **Full CLI access:** The tool passes every CLI command through, including commands that run code inside Obsidian (`eval`, `dev:*`) and install community plugins and themes. Nothing is blocked, so only use it with vaults and content you trust.
-- **Approvals:** The skill's instruction to ask before deleting or restoring is guidance, not enforcement. To approve the tool's calls yourself, set `obsidian_cli` to `ask` in WorkSwarm's tool permissions.
+- **Approvals:** The skill tells the agent to ask before it deletes files, restores an earlier version, pauses Sync or restores a Sync version, runs code with `eval` or `dev:*`, or installs, uninstalls or disables plugins and themes. This is guidance, not enforcement. To approve the tool's calls yourself, set `obsidian_cli` to `ask` in WorkSwarm's tool permissions.
 - **Dependencies:** Python standard library only. The tool does nothing at import time and doesn't store any settings.
 
 ## Not affiliated with Obsidian
@@ -42,6 +43,13 @@ The tool's `command`, `options`, `flags` and `vault` inputs map directly to the 
 This is an independent plugin. It isn't made or endorsed by Obsidian.
 
 ## Updates
+
+### 0.1.1
+
+- The skill now says that Sync status only describes this device, so the agent shouldn't claim other devices are in sync.
+- The listing description now says Obsidian must be running with its CLI turned on.
+- The safety section now lists every action the skill asks about first.
+- The tool refuses text containing a backslash before `n` or `t`, which the CLI would garble, and the agent writes it with its own file tools instead.
 
 ### 0.1.0
 

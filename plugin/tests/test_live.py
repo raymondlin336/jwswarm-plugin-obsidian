@@ -7,6 +7,7 @@ import asyncio
 import json
 import os
 import subprocess
+import time
 from pathlib import Path
 
 import pytest
@@ -79,21 +80,36 @@ def test_rename_stops_with_the_setting_off(run):
 
 
 def test_rename_updates_links_with_the_setting_on(run):
-    (BENCHMARK / "vault" / ".obsidian" / "app.json").write_text(
-        json.dumps({"alwaysUpdateLinks": True}), encoding="utf-8"
-    )
-    run("reload")
-    assert (
-        run("rename", options={"file": "Project Atlas", "name": "Project Apollo"})[
-            "success"
-        ]
-        is True
-    )
-    assert (
-        run("backlinks", options={"file": "Project Apollo"}, flags=["total"])["output"]
-        == "5"
-    )
-    assert run("unresolved", flags=["total"])["output"] == "0"
+    # Obsidian keeps settings in memory and `reload` doesn't reread app.json, so set it in the
+    # app the way the settings screen does. That also saves it to app.json, where the tool looks.
+    set_links = "app.vault.setConfig('alwaysUpdateLinks', {})"
+    app_json = BENCHMARK / "vault" / ".obsidian" / "app.json"
+    assert run("eval", options={"code": set_links.format("true")})["success"]
+    try:
+        # Obsidian saves settings shortly after a change, not immediately.
+        for _ in range(20):
+            if json.loads(app_json.read_text(encoding="utf-8")).get(
+                "alwaysUpdateLinks"
+            ):
+                break
+            time.sleep(0.5)
+        else:
+            pytest.fail("Obsidian didn't save the link setting to app.json")
+        assert (
+            run("rename", options={"file": "Project Atlas", "name": "Project Apollo"})[
+                "success"
+            ]
+            is True
+        )
+        assert (
+            run("backlinks", options={"file": "Project Apollo"}, flags=["total"])[
+                "output"
+            ]
+            == "5"
+        )
+        assert run("unresolved", flags=["total"])["output"] == "0"
+    finally:
+        run("eval", options={"code": set_links.format("false")})
 
 
 def test_timeout_reports_the_dialog_and_returns(run, tool_module, monkeypatch):

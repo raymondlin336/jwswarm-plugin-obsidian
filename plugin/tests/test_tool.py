@@ -35,6 +35,19 @@ def fake_cli(tool_module, monkeypatch, tmp_path):
     )
 
 
+@pytest.mark.parametrize("text", ["C:\\new folder", "a\\tb", "print('a\\nb')"])
+def test_backslash_n_or_t_is_refused_before_running(run, fake_cli, text):
+    result = run(command="append", options={"file": "A", "content": text})
+    assert result["error_code"] == "unsupported_content"
+    assert "content" in result["error"]
+    assert fake_cli.calls == []
+
+
+def test_other_backslashes_are_allowed(run, fake_cli):
+    run(command="append", options={"content": "C:\\Users\\Raymond\\docs"})
+    assert fake_cli.calls[0][2][1] == "content=C:\\Users\\Raymond\\docs"
+
+
 def test_success_builds_args_in_order(run, fake_cli):
     result = run(
         command="search",

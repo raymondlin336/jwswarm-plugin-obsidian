@@ -1,5 +1,5 @@
 {
-  "version": "0.1.0",
+  "version": "0.1.1",
   "package_type": "plugin",
   "id": "obsidian-cli",
   "name": "Obsidian CLI",
@@ -9,8 +9,8 @@
     "zh": "Obsidian 命令行"
   },
   "display_description": {
-    "en": "Interact with your Obsidian vault using WorkSwarm and the official CLI tools: search notes, follow links, query Bases, and check Sync status and file history. Windows only.",
-    "zh": "用官方命令行操作笔记库：搜索、查链接、查询 Bases、查看同步状态与历史。仅支持 Windows。"
+    "en": "Lets WorkSwarm work with your Obsidian vault through Obsidian's official CLI. Windows only. REQUIRES Obsidian 1.12.7 or later, running with your vault open. REQUIRES settings: turn on Command line interface under Settings > General, turn on Automatically update internal links under Settings > Files and links. If Obsidian is not installed at the default path, the agent will ask you for the path. Version 0.1.1.",
+    "zh": "版本 0.1.1。让 WorkSwarm 通过 Obsidian 官方命令行操作你的笔记库。仅支持 Windows。需要 Obsidian 1.12.7 或更高版本，并保持其运行、打开你的笔记库。需要开启的设置：在“设置 > 通用”中开启“命令行界面”，并在“设置 > 文件与链接”中开启“自动更新内部链接”。如果 Obsidian 未安装在默认路径，智能体会询问你它的安装路径。"
   },
   "category": "Engineering",
   "source": "local",
