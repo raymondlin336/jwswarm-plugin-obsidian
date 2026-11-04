@@ -14,7 +14,7 @@ that isn't marked as a benchmark vault.
 
 ## Expected answers
 
-These are kept outside the repo, with the test plan, so agents under test can't read them.
+The prompts, expected answers, rules and scoring are in [QUESTIONS.md](QUESTIONS.md).
 
 ## Set up by hand
 
