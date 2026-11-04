@@ -1,8 +1,9 @@
 # Benchmark vault
 
 `vault-template` is the clean copy of the vault used by the 20 benchmark tests. Agents never work in it.
-They work in a live copy, which `reset-vault.ps1` builds at `benchmark\vault`. Git ignores that copy, since it
-changes on every run. Open `benchmark\vault` in Obsidian, not `benchmark` or `vault-template`.
+They work in a live copy, which `reset-vault.ps1` builds outside the repo at `%USERPROFILE%\obsidian-bench\vault3`,
+so agents under test can't wander into the repo and read the plugin's files. Open that folder in Obsidian, not
+`benchmark` or `vault-template`.
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File benchmark\reset-vault.ps1
@@ -13,20 +14,7 @@ that isn't marked as a benchmark vault.
 
 ## Expected answers
 
-| Test | Expected |
-| --- | --- |
-| A1 | $48,000 (the $35,000 in Project Atlas Notes is a decoy) |
-| A2 | Vendor Notes, 2026-09-14 Kickoff, Old Contacts (case varies; Northbound is a decoy) |
-| A5 | `status` changes from `planning` to `active` |
-| A6 | Buy stamps, Return library books, Send invoice, Confirm vendor quote, Book follow-up meeting, Replace furnace filter, Order filter size 16x25 |
-| A8 | `Journal/Daily/<today, YYYY-MM-DD>.md` |
-| A9, A10 | Vendor Notes, Roadmap, 2026-09-14 Kickoff, Weekly Review, Old Contacts |
-| B8 | Dune 10 x 2 = 20, Emma 8 x 3 = 24, Ulysses 15 x 1 = 15 (Old Book is a decoy) |
-| B9 | Slides, the only disabled core plugin |
-| B10 | Benchmark Blue to Benchmark Amber |
-
-A9 and A10 decoys are the plain text mention in Project Atlas Notes, the code block and inline code in
-Roadmap, and the link to Project Atlas Notes.
+These are kept outside the repo, with the test plan, so agents under test can't read them.
 
 ## Set up by hand
 
