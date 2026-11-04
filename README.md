@@ -50,7 +50,8 @@ open and registered as `vault3`, and they reset that vault as they run.
 `benchmark/vault-template` is a clean vault for 20 tests: 10 everyday tasks (search, tasks, properties, daily notes,
 links, rename) and 10 that need Obsidian itself (Sync, File Recovery, commands, Bases, plugins, themes).
 `benchmark/reset-vault.ps1` copies it to `%USERPROFILE%\obsidian-bench\vault3`, outside the repo, so agents under
-test can't read the plugin's files. See [benchmark/README.md](benchmark/README.md).
+test can't read the plugin's files. The prompts and expected answers are in
+[benchmark/QUESTIONS.md](benchmark/QUESTIONS.md), and setup is in [benchmark/README.md](benchmark/README.md).
 
 Results for 0.1.1, one run per test, scored 1 (correct), 0.75 (correct after retries), 0.5 (partly correct) or 0:
 
