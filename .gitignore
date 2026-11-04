@@ -1,0 +1,5 @@
+benchmark/vault/
+benchmark/.obsidian/
+benchmark/vault-template/.obsidian/workspace*.json
+plugin/dist/
+__pycache__/

@@ -1,0 +1,6 @@
+.theme-light,
+.theme-dark {
+  --background-primary: #e8f1fa;
+  --background-secondary: #d3e4f5;
+  --text-normal: #12263a;
+}
