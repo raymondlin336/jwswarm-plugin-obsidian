@@ -1,7 +1,8 @@
 # Restores the live benchmark vault to match vault-template.
 # Only touches files that differ, so unchanged notes don't add Sync or File Recovery versions.
 param(
-    [string]$VaultPath = (Join-Path $PSScriptRoot 'vault')
+    # Outside the repo, so agents under test can't reach the plugin's files from the vault.
+    [string]$VaultPath = (Join-Path $env:USERPROFILE 'obsidian-bench\vault3')
 )
 
 $ErrorActionPreference = 'Stop'
@@ -42,7 +43,8 @@ Get-ChildItem $root -Recurse -File -Force | ForEach-Object {
     $relative = Get-RelativePath $root $_.FullName
     if ($relative -eq '.jw-benchmark-vault' -or $relative.StartsWith("$appDataFolder\")) { return }
     if (-not $templateFiles.ContainsKey($relative)) {
-        Remove-Item -LiteralPath $_.FullName -Force
+        # The extended path prefix also deletes files with reserved names, like "nul" left by a shell redirect.
+        [IO.File]::Delete('\\?\' + $_.FullName)
         $changed += "removed   $relative"
     }
 }

@@ -1,6 +1,6 @@
-"""Runs the tool against the real CLI. Only ever targets benchmark/vault, and only when requested.
+"""Runs the tool against the real CLI. Only ever targets the test vault, and only when requested.
 
-Run with OBSIDIAN_LIVE=1. The test vault must be registered in Obsidian as "vault".
+Run with OBSIDIAN_LIVE=1. The test vault must be registered in Obsidian as "vault3".
 """
 
 import asyncio
@@ -17,7 +17,8 @@ pytestmark = pytest.mark.skipif(
 )
 
 BENCHMARK = Path(__file__).parents[2] / "benchmark"
-VAULT_NAME = "vault"
+VAULT = Path.home() / "obsidian-bench" / "vault3"
+VAULT_NAME = "vault3"
 
 
 def _reset():
@@ -45,7 +46,7 @@ def run(tool_module):
         )
 
     _reset()
-    assert call("vault", options={"info": "path"})["output"] == str(BENCHMARK / "vault")
+    assert call("vault", options={"info": "path"})["output"] == str(VAULT)
     yield call
     # Clear any open dialog, restore the files, then reload so the app picks up the settings.
     call("reload")
@@ -76,14 +77,14 @@ def test_multiline_and_unicode_content_round_trips(run):
 def test_rename_stops_with_the_setting_off(run):
     result = run("rename", options={"file": "Project Atlas", "name": "Project Apollo"})
     assert result["error_code"] == "link_updates_off"
-    assert (BENCHMARK / "vault" / "Projects" / "Project Atlas.md").exists()
+    assert (VAULT / "Projects" / "Project Atlas.md").exists()
 
 
 def test_rename_updates_links_with_the_setting_on(run):
     # Obsidian keeps settings in memory and `reload` doesn't reread app.json, so set it in the
     # app the way the settings screen does. That also saves it to app.json, where the tool looks.
     set_links = "app.vault.setConfig('alwaysUpdateLinks', {})"
-    app_json = BENCHMARK / "vault" / ".obsidian" / "app.json"
+    app_json = VAULT / ".obsidian" / "app.json"
     assert run("eval", options={"code": set_links.format("true")})["success"]
     try:
         # Obsidian saves settings shortly after a change, not immediately.
