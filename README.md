@@ -1,4 +1,4 @@
-# jwswarm-plugin-obsidian
+# Obsidian CLI - WorkSwarm Plugin
 
 **Obsidian CLI for WorkSwarm**: a WorkSwarm plugin that lets the agent work with your Obsidian vault through
 Obsidian's official CLI. Besides reading and editing notes, it reaches things file edits can't, such as Sync status
